@@ -10,7 +10,11 @@ struct BankAccount {
 
 impl BankAccount {
     fn new(owner: String, balance: f64) -> BankAccount {
-        BankAccount { owner, balance, is_active: true }
+        BankAccount {
+            owner,
+            balance,
+            is_active: true,
+        }
     }
 
     // This should be mutable because we are calling the withdraw method
@@ -36,7 +40,10 @@ impl BankAccount {
 
     // This should be immutable because we are not calling the withdraw method
     fn check_balance(&self) {
-        println!("Balance for {} is {}, is active: {}", self.owner, self.balance, self.is_active);
+        println!(
+            "Balance for {} is {}, is active: {}",
+            self.owner, self.balance, self.is_active
+        );
     }
 }
 
@@ -59,7 +66,7 @@ fn main() {
     // - [i32; 3] and [i32; 5] are different types
     let num_arr: [i32; 3] = [1, 2, 3];
     println!("num_arr: {:?}", num_arr);
-    
+
     // Mix array is not allowed
     // let mix_arr = [1, 2, 3, "Hello", true];
     // println!("mix_arr: {:?}", mix_arr);
@@ -106,9 +113,12 @@ fn main() {
         is_active: true,
     };
 
+    my_account.activate();
+    mom_account.activate();
+
     my_account.check_balance();
     mom_account.check_balance();
-    
+
     my_account.withdraw(500.0);
     mom_account.deposit(500.0);
 
@@ -118,17 +128,20 @@ fn main() {
     my_account.owner = "Daniel Kim".to_string();
     my_account.deactivate();
     my_account.check_balance();
-    
+
     // make fake accounts
     let fake_account = build_fake_account(my_account);
     fake_account.check_balance();
 
-    // Tuple Struct 
+    // Tuple Struct
     // This derives the Debug trait so that Position can be printed using {:?}
     #[derive(Debug)]
     struct Position(i32, i32, i32);
     let position = Position(10, 20, 30);
-    println!("position: {:?}", position);
+    println!(
+        "position 1 : {}, position 2 : {}, position 3 : {}",
+        position.0, position.1, position.2
+    );
 
     // Unit Like Struct
     #[derive(Debug)]
@@ -141,7 +154,8 @@ fn main() {
     // =========================================================================
 
     let condition = true;
-    let cond_var = if condition {5} else {6};
+    println!("condition: {}", condition);
+    let cond_var = if condition { 5 } else { 6 };
     println!("cond_var: {}", cond_var);
 
     // This does not work because the else block must return the same type as the if block
@@ -150,5 +164,4 @@ fn main() {
     // } else {
     //     5
     // };
-    
 }

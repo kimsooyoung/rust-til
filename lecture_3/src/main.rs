@@ -11,7 +11,6 @@ fn plus_one(x: i32) -> i32 {
 }
 
 fn main() {
-
     const BIG_NUM: u32 = 1_000_000;
     println!("Big Num : {}", BIG_NUM);
 
@@ -36,7 +35,7 @@ fn main() {
     let _heart_eyed_cat = '😻';
     println!("_heart_eyed_cat {}", _heart_eyed_cat);
 
-    let tup: (i32, f32, bool) = (41728, 0.5, true);    
+    let tup: (i32, f32, bool) = (41728, 0.5, true);
     println!("tup.0 {}", tup.0);
     println!("tup.1 {}", tup.1);
     println!("tup.2 {}", tup.2);
@@ -49,11 +48,7 @@ fn main() {
     let _output_plus_one = plus_one(3);
 
     let _rand_num = rand::thread_rng().gen_range(1, 100);
-    let _rand_num2 = if _rand_num > 50 {
-        100
-    } else {
-        0
-    };
+    let _rand_num2 = if _rand_num > 50 { 100 } else { 0 };
 
     if _rand_num > 50 {
         println!("Greater than 50");
@@ -61,9 +56,9 @@ fn main() {
         println!("Smaller than 50");
     }
 
-    let my_arr = [1,2,3,4,5];
+    let my_arr = [1, 2, 3, 4, 5];
 
-    for item in my_arr.iter(){
+    for item in my_arr.iter() {
         println!("Current Item is {}", item);
     }
 }
