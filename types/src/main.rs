@@ -2,58 +2,6 @@ fn print_string(s: &str) {
     println!("print_string: {}", s);
 }
 
-struct BankAccount {
-    owner: String,
-    balance: f64,
-    is_active: bool,
-}
-
-impl BankAccount {
-    fn new(owner: String, balance: f64) -> BankAccount {
-        BankAccount {
-            owner,
-            balance,
-            is_active: true,
-        }
-    }
-
-    // This should be mutable because we are calling the withdraw method
-    fn withdraw(&mut self, amount: f64) {
-        self.balance -= amount;
-        println!("Withdrew {} from {}", amount, self.owner);
-    }
-
-    fn deposit(&mut self, amount: f64) {
-        self.balance += amount;
-        println!("Deposited {} to {}", amount, self.owner);
-    }
-
-    fn activate(&mut self) {
-        self.is_active = true;
-        println!("Activated account for {}", self.owner);
-    }
-
-    fn deactivate(&mut self) {
-        self.is_active = false;
-        println!("Deactivated account for {}", self.owner);
-    }
-
-    // This should be immutable because we are not calling the withdraw method
-    fn check_balance(&self) {
-        println!(
-            "Balance for {} is {}, is active: {}",
-            self.owner, self.balance, self.is_active
-        );
-    }
-}
-
-fn build_fake_account(account: BankAccount) -> BankAccount {
-    BankAccount {
-        owner: "Fake Account".to_string(),
-        ..account
-    }
-}
-
 fn main() {
     // signed / unsigned integers
     let x: i64 = 100;
@@ -100,54 +48,6 @@ fn main() {
     let my_string_slice: &str = &my_string[0..5];
     // my_string.push_str(", Rust!");
     print_string(my_string_slice);
-
-    // =========================================================================
-    // Struct
-    // =========================================================================
-
-    // This should be mutable because we are calling the withdraw method
-    let mut my_account = BankAccount::new("Sooyoung Kim".to_string(), 1500.0);
-    let mut mom_account = BankAccount {
-        owner: "Mom".to_string(),
-        balance: 0.0,
-        is_active: true,
-    };
-
-    my_account.activate();
-    mom_account.activate();
-
-    my_account.check_balance();
-    mom_account.check_balance();
-
-    my_account.withdraw(500.0);
-    mom_account.deposit(500.0);
-
-    my_account.check_balance();
-    mom_account.check_balance();
-
-    my_account.owner = "Daniel Kim".to_string();
-    my_account.deactivate();
-    my_account.check_balance();
-
-    // make fake accounts
-    let fake_account = build_fake_account(my_account);
-    fake_account.check_balance();
-
-    // Tuple Struct
-    // This derives the Debug trait so that Position can be printed using {:?}
-    #[derive(Debug)]
-    struct Position(i32, i32, i32);
-    let position = Position(10, 20, 30);
-    println!(
-        "position 1 : {}, position 2 : {}, position 3 : {}",
-        position.0, position.1, position.2
-    );
-
-    // Unit Like Struct
-    #[derive(Debug)]
-    struct UnitLikeStruct;
-    let unit_like_struct = UnitLikeStruct;
-    println!("unit_like_struct: {:?}", unit_like_struct);
 
     // =========================================================================
     // Variables with Control Flow
