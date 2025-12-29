@@ -18,8 +18,7 @@ fn main() {
 
     let usd_to_krw = {
         let usd = 50;
-        let krw = usd * 1400;
-        krw
+        usd * 1400
     };
     println!("usd_to_krw: {}", usd_to_krw);
 
@@ -27,4 +26,24 @@ fn main() {
     // Destructuring the tuple into separate variables
     let (quotient, remainder) = divide_with_remainder(17, 5);
     println!("17 ÷ 5 = {} remainder {}", quotient, remainder);
+
+    // inline function
+    let greeting = |name: &str| format!("Hello, {}!", name);
+    println!("greeting: {}", greeting("Sooyoung"));
+
+    let ask_for_age = || -> u32 {
+        use std::io::{self, Write};
+
+        print!("Enter your age: ");
+        io::stdout().flush().unwrap();
+
+        let mut input = String::new();
+        io::stdin()
+            .read_line(&mut input)
+            .expect("Failed to read line");
+        input.trim().parse().expect("Invalid age entered.")
+    };
+
+    let age = ask_for_age();
+    println!("Hello, you are {} years old!", age);
 }

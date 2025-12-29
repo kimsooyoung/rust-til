@@ -116,6 +116,7 @@ just watch-error-handling
 just watch-guessing-game
 just watch-hello-world
 just watch-lecture-3
+just watch-structs
 ```
 
 **Tip:** Run `just` or `just --list` to see all available commands with descriptions.

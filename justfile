@@ -57,6 +57,9 @@ watch-lecture-3:
 watch-ownership:
     @just watch ownership
 
+watch-structs:
+    @just watch structs
+
 watch-types:
     @just watch types
 
