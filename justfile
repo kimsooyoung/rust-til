@@ -63,3 +63,6 @@ watch-structs:
 watch-types:
     @just watch types
 
+watch-collections:
+    @just watch collections
+
