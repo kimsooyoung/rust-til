@@ -118,6 +118,7 @@ just watch-hello-world
 just watch-lecture-3
 just watch-structs
 just watch-collections
+just watch-optionals
 ```
 
 **Tip:** Run `just` or `just --list` to see all available commands with descriptions.

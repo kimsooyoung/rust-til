@@ -66,3 +66,5 @@ watch-types:
 watch-collections:
     @just watch collections
 
+watch-optionals:
+    @just watch optionals
