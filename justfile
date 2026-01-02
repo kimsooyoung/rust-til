@@ -71,3 +71,6 @@ watch-optionals:
 
 watch-lifetimes:
     @just watch lifetimes
+
+watch-traits:
+    @just watch traits

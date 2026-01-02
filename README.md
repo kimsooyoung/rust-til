@@ -120,6 +120,7 @@ just watch-structs
 just watch-collections
 just watch-optionals
 just watch-lifetimes
+just watch-traits
 ```
 
 **Tip:** Run `just` or `just --list` to see all available commands with descriptions.
