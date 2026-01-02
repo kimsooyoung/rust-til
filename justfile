@@ -68,3 +68,6 @@ watch-collections:
 
 watch-optionals:
     @just watch optionals
+
+watch-lifetimes:
+    @just watch lifetimes
