@@ -121,6 +121,7 @@ just watch-collections
 just watch-optionals
 just watch-lifetimes
 just watch-traits
+just watch-pointers
 ```
 
 **Tip:** Run `just` or `just --list` to see all available commands with descriptions.
