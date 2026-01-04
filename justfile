@@ -72,6 +72,9 @@ watch-collections:
 watch-optionals:
     @just watch optionals
 
+watch-pcmp:
+    @just watch pcmp
+
 watch-lifetimes:
     @just watch lifetimes
 
