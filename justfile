@@ -45,6 +45,9 @@ watch-error-handling:
 watch-functions:
     @just watch functions
 
+watch-generics:
+    @just watch generics
+
 watch-guessing-game:
     @just watch guessing_game
 

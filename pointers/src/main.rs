@@ -98,8 +98,13 @@ fn main() {
     println!("age: {}", age);
 
     // RefCell is a mutable reference to a value on the heap
-    let ref_cell = RefCell::new(10);
+    let ref_cell = RefCell::new(vec![1, 2, 3]);
+    
     let mut mutable_ref = ref_cell.borrow_mut();
-    let length = ref_cell.borrow().len();
-    mutable_ref.push_str(10);
+    mutable_ref.push(10);
+    println!("mutable_ref: {:?}", mutable_ref);
+
+    // This will cause a panic because the inner value is already borrowed
+    let len = ref_cell.borrow().len();
+    println!("len: {}", len);
 }

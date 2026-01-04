@@ -110,6 +110,7 @@ You can use project-specific shortcuts for faster access (no need to type the pr
 just watch-types
 just watch-ownership
 just watch-functions
+just watch-generics
 just watch-borrowing-reference
 just watch-enums
 just watch-error-handling
