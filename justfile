@@ -72,6 +72,9 @@ watch-collections:
 watch-optionals:
     @just watch optionals
 
+watch-asynchronous:
+    @just watch asynchronous
+
 watch-pcmp:
     @just watch pcmp
 
