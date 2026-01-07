@@ -45,6 +45,9 @@ watch-error-handling:
 watch-functions:
     @just watch functions
 
+watch-generics:
+    @just watch generics
+
 watch-guessing-game:
     @just watch guessing_game
 
@@ -69,6 +72,12 @@ watch-collections:
 watch-optionals:
     @just watch optionals
 
+watch-asynchronous:
+    @just watch asynchronous
+
+watch-pcmp:
+    @just watch pcmp
+
 watch-lifetimes:
     @just watch lifetimes
 
@@ -77,3 +86,6 @@ watch-traits:
 
 watch-pointers:
     @just watch pointers
+
+watch-project-manufacturers:
+    @just watch project_manufacturers

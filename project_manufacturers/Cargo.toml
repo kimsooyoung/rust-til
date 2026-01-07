@@ -1,0 +1,9 @@
+[package]
+name = "project_manufacturers"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+serde_json = "1.0.149"
+reqwest = { version = "0.12", features = ["json"] }
+tokio = { version = "1", features = ["full"] }

@@ -110,6 +110,7 @@ You can use project-specific shortcuts for faster access (no need to type the pr
 just watch-types
 just watch-ownership
 just watch-functions
+just watch-generics
 just watch-borrowing-reference
 just watch-enums
 just watch-error-handling
@@ -119,9 +120,12 @@ just watch-lecture-3
 just watch-structs
 just watch-collections
 just watch-optionals
+just watch-asynchronous
+just watch-pcmp
 just watch-lifetimes
 just watch-traits
 just watch-pointers
+just watch-project-manufacturers
 ```
 
 **Tip:** Run `just` or `just --list` to see all available commands with descriptions.
