@@ -86,3 +86,6 @@ watch-traits:
 
 watch-pointers:
     @just watch pointers
+
+watch-project-manufacturers:
+    @just watch project_manufacturers
