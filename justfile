@@ -87,5 +87,8 @@ watch-traits:
 watch-pointers:
     @just watch pointers
 
-watch-project-manufacturers:
-    @just watch project_manufacturers
+# Watch project_manufacturers with an argument
+# Usage: just watch-project-manufacturers <manufacturer>
+# Example: just watch-project-manufacturers BMW
+watch-project-manufacturers manufacturer:
+    @cd project_manufacturers && cargo-watch -qc -s "cargo run -- {{manufacturer}}" -x clippy
