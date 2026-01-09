@@ -158,6 +158,16 @@ just lecture4 lecture4_3
 just watch-lecture4 lecture4_2
 ```
 
+#### Project with Arguments
+
+Some projects accept command-line arguments. For example, `project_manufacturers` accepts a manufacturer name:
+
+```bash
+# Watch project_manufacturers with an argument
+just watch-project-manufacturers BMW
+just watch-project-manufacturers Toyota
+```
+
 ### Running Projects Manually
 
 If you prefer to run projects manually, navigate to any project directory and run:
