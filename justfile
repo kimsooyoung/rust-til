@@ -92,3 +92,10 @@ watch-pointers:
 # Example: just watch-project-manufacturers BMW
 watch-project-manufacturers manufacturer:
     @cd project_manufacturers && cargo-watch -qc -s "cargo run -- {{manufacturer}}" -x clippy
+
+# Watch project_notes with a note title argument
+# Usage: just watch-project-notes <note_title>
+# Example: just watch-project-notes "My Notes"
+# Note: Use quotes if the note title contains spaces
+watch-project-notes note_title:
+    @cd project_notes && cargo-watch -qc -x 'run -- {{note_title}}' -i "{{note_title}}" -i "notes.txt" -x clippy
