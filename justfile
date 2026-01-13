@@ -14,6 +14,10 @@ watch project:
 run project:
     @cd {{project}} && cargo run
 
+# Run tui_tut with TERM set (required for terminal UI)
+run-tui-tut:
+    @cd tui_tut && TERM=xterm-256color cargo run
+
 # Run clippy on a specific project
 # Usage: just clippy <project_name>
 # Example: just clippy types
