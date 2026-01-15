@@ -136,6 +136,10 @@ just watch-project-manufacturers
 # Run once without watch mode
 just run <project_name>
 
+# Run specific projects with TERM set (for TUI applications)
+just run-tui-tut
+just run-inventory-system
+
 # Run clippy only
 just clippy <project_name>
 
