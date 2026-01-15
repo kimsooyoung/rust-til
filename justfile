@@ -18,6 +18,10 @@ run project:
 run-tui-tut:
     @cd tui_tut && TERM=xterm-256color cargo run
 
+# Run inventory_system with TERM set (required for terminal UI)
+run-inventory-system:
+    @cd inventory_system && TERM=xterm-256color cargo run
+
 # Run clippy on a specific project
 # Usage: just clippy <project_name>
 # Example: just clippy types

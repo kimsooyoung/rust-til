@@ -1,0 +1,16 @@
+[
+  {
+    "product_type": "Chair",
+    "quantity": 40,
+    "price_per_unit": 50.0,
+    "sales_tax": 5.0,
+    "total_price": 2200.0
+  },
+  {
+    "product_type": "Desk",
+    "quantity": 1,
+    "price_per_unit": 20.0,
+    "sales_tax": 2.0,
+    "total_price": 22.0
+  }
+]
