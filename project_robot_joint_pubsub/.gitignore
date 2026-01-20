@@ -1,0 +1,6 @@
+# MuJoCo build artifacts
+mujoco_build/
+../mujoco-rs/
+
+# Keep mujoco_libs for auto-download (if switching back)
+# mujoco_libs/

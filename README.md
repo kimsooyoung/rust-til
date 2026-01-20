@@ -126,6 +126,7 @@ just watch-lifetimes
 just watch-traits
 just watch-pointers
 just watch-project-manufacturers
+just watch-project-notes
 ```
 
 **Tip:** Run `just` or `just --list` to see all available commands with descriptions.
@@ -139,6 +140,10 @@ just run <project_name>
 # Run specific projects with TERM set (for TUI applications)
 just run-tui-tut
 just run-inventory-system
+
+# Run project_robot_joint_pubsub binaries (requires MUJOCO_DOWNLOAD_DIR)
+just run-robot-publisher
+just run-robot-subscriber
 
 # Run clippy only
 just clippy <project_name>
@@ -171,6 +176,54 @@ Some projects accept command-line arguments. For example, `project_manufacturers
 just watch-project-manufacturers BMW
 just watch-project-manufacturers Toyota
 ```
+
+#### Projects with Multiple Binaries
+
+Some projects have multiple binaries. For example, `project_robot_joint_pubsub` has separate publisher and subscriber binaries:
+
+```bash
+# Run publisher (publishes robot joint angles via ZMQ)
+just run-robot-publisher
+just watch-robot-publisher
+
+# Run subscriber (subscribes to robot joint angles via ZMQ)
+just run-robot-subscriber
+just watch-robot-subscriber
+
+# Or run with cargo directly
+cd project_robot_joint_pubsub
+MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" cargo run --bin publisher
+MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" cargo run --bin subscriber
+```
+
+##### Setting Up project_robot_joint_pubsub
+
+The `project_robot_joint_pubsub` project uses MuJoCo physics simulation library with **C++ viewer support**. Unlike the auto-download feature, this requires building a modified MuJoCo library from source.
+
+**Prerequisites:** CMake (3.10+), C++ compiler, Git, Build tools
+
+**Quick Setup:**
+```bash
+cd project_robot_joint_pubsub
+
+# 1. Build modified MuJoCo with C++ viewer support
+./build_mujoco_cpp.sh
+
+# 2. Set environment variable (script will show the path)
+export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build"
+
+# 3. Run the subscriber
+just run-robot-subscriber
+```
+
+**Note:** 
+- The C++ viewer requires static linking to a modified MuJoCo build
+- Building MuJoCo takes several minutes (one-time setup)
+- The mujoco-rs repository and build artifacts are excluded from git
+- See `project_robot_joint_pubsub/README.md` for detailed setup instructions
+
+**Open Source Credits:**
+- This project uses [mujoco-rs](https://github.com/davidhozic/mujoco-rs) - MuJoCo bindings and high-level wrappers for Rust, which provides the physics simulation capabilities. MuJoCo-rs is an open-source project that wraps the MuJoCo physics engine (version 3.3.7) for use in Rust applications.
 
 ### Running Projects Manually
 
