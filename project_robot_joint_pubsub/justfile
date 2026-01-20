@@ -5,7 +5,7 @@
 #
 # Typical workflow (dev):
 #   - just project_robot_joint_pubsub mujoco-build
-#   - export MUJOCO_STATIC_LINK_DIR="$(realpath ../mujoco-rs/mujoco/build)"
+#   - export MUJOCO_STATIC_LINK_DIR="$(realpath ../mujoco-rs/mujoco/build/lib)"
 #   - just project_robot_joint_pubsub run-robot-subscriber
 #
 # Note: environment variables set in a `just` recipe cannot persist back to your shell.
@@ -31,7 +31,7 @@ mujoco-build:
 mujoco-export-hint:
     @cd "{{justfile_directory()}}" && \
       echo "Run this in your shell (cannot be persisted by just):" && \
-      echo "  export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build)\""
+      echo "  export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build/lib)\""
 
 # Build binaries (dev profile).
 # - `publisher` does not require a system MuJoCo install.
@@ -56,7 +56,7 @@ run-robot-subscriber:
         echo "❌ Error: MUJOCO_STATIC_LINK_DIR not set."; \
         echo "   1) Run: just project_robot_joint_pubsub mujoco-build"; \
         echo "   2) Then in your shell:"; \
-        echo "      export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build)\""; \
+        echo "      export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build/lib)\""; \
         exit 1; \
       fi && \
       env MUJOCO_STATIC_LINK_DIR="${MUJOCO_STATIC_LINK_DIR:-}" cargo run --bin subscriber
@@ -72,7 +72,7 @@ watch-robot-subscriber:
         echo "❌ Error: MUJOCO_STATIC_LINK_DIR not set."; \
         echo "   1) Run: just project_robot_joint_pubsub mujoco-build"; \
         echo "   2) Then in your shell:"; \
-        echo "      export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build)\""; \
+        echo "      export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build/lib)\""; \
         exit 1; \
       fi && \
       env MUJOCO_STATIC_LINK_DIR="${MUJOCO_STATIC_LINK_DIR:-}" cargo-watch -qc -x "run --bin subscriber" -x clippy

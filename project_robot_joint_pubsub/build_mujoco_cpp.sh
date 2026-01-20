@@ -44,7 +44,7 @@ cd "$MUJOCO_DIR"
 mkdir -p build
 cd build
 
-# Configure CMake for static build with libsimulate
+# Configure CMake for static build with MuJoCo's simulate support library
 echo "⚙️  Configuring CMake..."
 cmake \
     -DBUILD_SHARED_LIBS=OFF \
@@ -54,18 +54,20 @@ cmake \
     -DCMAKE_EXE_LINKER_FLAGS="-Wl,--no-as-needed" \
     ..
 
-# Build libsimulate target
-echo "🔨 Building libsimulate..."
-cmake --build . --parallel --target libsimulate
+# Build the simulate support library target.
+# Upstream MuJoCo's CMake uses `libmujoco_simulate` for the static library.
+echo "🔨 Building libmujoco_simulate..."
+cmake --build . --parallel --target libmujoco_simulate
 
-# Find the built library
-LIB_DIR=$(pwd)
+# Find the built library artifacts.
+# Note: `mujoco-rs` expects MUJOCO_STATIC_LINK_DIR to be the *lib/* directory.
+LIB_DIR="$(pwd)/lib"
 if [ -f "$LIB_DIR/libsimulate.a" ]; then
     echo "✅ Static library built: $LIB_DIR/libsimulate.a"
 elif [ -f "$LIB_DIR/libsimulate.so" ]; then
     echo "✅ Shared library built: $LIB_DIR/libsimulate.so"
 else
-    echo "⚠️  Warning: Could not find libsimulate library"
+    echo "⚠️  Warning: Could not find simulate library (expected libsimulate.* under $LIB_DIR)"
 fi
 
 # Also build the main mujoco library if needed
@@ -77,6 +79,19 @@ if [ -f "$LIB_DIR/libmujoco.a" ]; then
     echo "✅ Static library built: $LIB_DIR/libmujoco.a"
 elif [ -f "$LIB_DIR/libmujoco.so" ]; then
     echo "✅ Shared library built: $LIB_DIR/libmujoco.so"
+fi
+
+# Build GLFW (needed by mujoco-rs when `cpp-viewer` feature is enabled).
+# mujoco-rs links with `-lglfw3`, so we ensure `libglfw3.*` exists under $LIB_DIR.
+echo "🔨 Building glfw (libglfw3)..."
+cmake --build . --parallel --target glfw
+
+if [ -f "$LIB_DIR/libglfw3.a" ]; then
+    echo "✅ Static library built: $LIB_DIR/libglfw3.a"
+elif [ -f "$LIB_DIR/libglfw3.so" ]; then
+    echo "✅ Shared library built: $LIB_DIR/libglfw3.so"
+else
+    echo "⚠️  Warning: Could not find GLFW library (expected libglfw3.* under $LIB_DIR)"
 fi
 
 echo ""

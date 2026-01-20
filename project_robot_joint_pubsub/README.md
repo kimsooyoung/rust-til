@@ -53,10 +53,10 @@ This project uses MuJoCo physics simulation library with **C++ viewer support**.
 2. **Set the environment variable:**
    ```bash
    # The script will output the library directory, set it like this:
-   export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build"
+   export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build/lib"
    
    # Or add it to your shell profile (~/.bashrc, ~/.zshrc, etc.) for persistence:
-   echo 'export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build"' >> ~/.bashrc
+   echo 'export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build/lib"' >> ~/.bashrc
    source ~/.bashrc
    ```
 
