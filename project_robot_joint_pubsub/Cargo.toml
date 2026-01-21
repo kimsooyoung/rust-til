@@ -20,3 +20,4 @@ anyhow = "1.0"
 clap = { version = "4.5", features = ["derive"] }
 mujoco-rs = { version = "2.2.2", default-features = false, features = ["cpp-viewer", "renderer", "renderer-winit-fallback"] }
 zlib-rs = "0.5.5"
+eframe = "0.29"

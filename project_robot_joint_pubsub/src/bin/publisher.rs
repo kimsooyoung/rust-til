@@ -47,7 +47,7 @@ async fn main() -> Result<()> {
         // For a free joint, we'll simulate x, y, z position changes
         let t = timestamp as f64 * 0.01;
         let angle_rad = t.sin() * 2.0; // Simulated angle/position component
-        let velocity = t.cos() * 0.1;   // Velocity component
+        let velocity = t.cos() * 0.1; // Velocity component
         let torque = (t * 2.0).sin() * 0.5; // Torque component
 
         let joint = JointAngles {

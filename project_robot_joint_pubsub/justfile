@@ -10,16 +10,19 @@
 #
 # Note: environment variables set in a `just` recipe cannot persist back to your shell.
 
+# Default recipe: show available commands in this file
+default:
+    @just --list
+
 # Compatibility wrapper:
 # If you're already in `project_robot_joint_pubsub/`, you can still run:
 #   just project_robot_joint_pubsub <recipe>
 # even though this directory has its own `justfile`.
+#
+# Important: this must NOT be the first recipe, otherwise `just` (with no args)
+# tries to treat it as the default and errors.
 project_robot_joint_pubsub +args:
     @just -f "{{justfile_directory()}}/justfile" {{args}}
-
-# Default recipe: show available commands in this file
-default:
-    @just --list
 
 # Build MuJoCo (modified) with C++ viewer support.
 # This runs the repo-provided script and prints the resulting library directory.
@@ -47,6 +50,19 @@ build-release:
 # This keeps downloaded artifacts inside `project_robot_joint_pubsub/mujoco_libs` in dev.
 run-robot-publisher:
     @cd "{{justfile_directory()}}" && MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" cargo run --bin publisher
+
+# Run GUI publisher (egui sliders) that publishes hand joint angles.
+# This binary needs MuJoCo available at link time, so `MUJOCO_STATIC_LINK_DIR` must be set.
+run-robot-publisher-gui:
+    @cd "{{justfile_directory()}}" && \
+      if [ -z "${MUJOCO_STATIC_LINK_DIR:-}" ]; then \
+        echo "❌ Error: MUJOCO_STATIC_LINK_DIR not set."; \
+        echo "   1) Run: just project_robot_joint_pubsub mujoco-build"; \
+        echo "   2) Then in your shell:"; \
+        echo "      export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build/lib)\""; \
+        exit 1; \
+      fi && \
+      env MUJOCO_STATIC_LINK_DIR="${MUJOCO_STATIC_LINK_DIR:-}" cargo run --bin publisher_joint_slider_gui_eframe
 
 # Run subscriber with MUJOCO_STATIC_LINK_DIR set (for C++ viewer / libsimulate static linking).
 # This avoids the pkg-config lookup for `mujoco.pc`.
