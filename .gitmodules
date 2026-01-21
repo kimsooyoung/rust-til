@@ -1,0 +1,3 @@
+[submodule "project_robot_joint_pubsub/pro-models"]
+	path = project_robot_joint_pubsub/pro-models
+	url = https://github.com/Proception-AI/pro-models.git

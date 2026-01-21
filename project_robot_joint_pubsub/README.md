@@ -22,12 +22,71 @@ Each message contains:
   - Velocity in rad/s
   - Torque in N⋅m
 
+## Setup
+
+### MuJoCo Library with C++ Viewer Support
+
+This project uses MuJoCo physics simulation library with **C++ viewer support**. The C++ viewer provides the full-featured MuJoCo Simulate UI with advanced capabilities.
+
+**Important:** Unlike the auto-download feature, the C++ viewer requires building a modified MuJoCo library from source. This is a one-time setup process.
+
+**Prerequisites:**
+- CMake (3.10 or higher)
+- C++ compiler (GCC or Clang)
+- Git
+- Build tools (make, ninja, etc.)
+
+**Build Steps:**
+
+1. **Run the build script:**
+   ```bash
+   cd project_robot_joint_pubsub
+   ./build_mujoco_cpp.sh
+   ```
+
+   This script will:
+   - Clone the mujoco-rs repository (if not already present) to `../mujoco-rs`
+   - Initialize the modified MuJoCo submodule
+   - Build MuJoCo statically with C++ viewer support (`libsimulate`)
+   - Output the library directory path
+
+2. **Set the environment variable:**
+   ```bash
+   # The script will output the library directory, set it like this:
+   export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build/lib"
+   
+   # Or add it to your shell profile (~/.bashrc, ~/.zshrc, etc.) for persistence:
+   echo 'export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build/lib"' >> ~/.bashrc
+   source ~/.bashrc
+   ```
+
+3. **Build and run:**
+   ```bash
+   # Using justfile (checks for MUJOCO_STATIC_LINK_DIR)
+   just run-robot-subscriber
+   
+   # Or manually:
+   cargo build --bin subscriber
+   cargo run --bin subscriber
+   ```
+
+**Note:** 
+- The C++ viewer requires static linking, so `auto-download-mujoco` feature is not used
+- The build script clones mujoco-rs to `../mujoco-rs` by default (can be changed via `MUJOCO_RS_REPO_DIR` env var)
+- Building MuJoCo can take several minutes depending on your system
+- The mujoco-rs repository and build artifacts are excluded from git (via `.gitignore`)
+
 ## Usage
 
 ### Build the project
 
 ```bash
-cargo build --release
+# Using justfile (automatically handles MUJOCO_DOWNLOAD_DIR)
+just run-robot-publisher
+just run-robot-subscriber
+
+# Or manually:
+MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" cargo build --release
 ```
 
 ### Run the Publisher
@@ -35,14 +94,18 @@ cargo build --release
 In one terminal, start the publisher:
 
 ```bash
-cargo run --release -- publisher
+# Using justfile (recommended)
+just run-robot-publisher
+
+# Or with cargo directly
+MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" cargo run --bin publisher
 ```
 
 Or with custom options:
 
 ```bash
 # Custom bind address and interval
-cargo run --release -- publisher --bind tcp://*:5556 --interval 50
+MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" cargo run --bin publisher -- --bind tcp://*:5556 --interval 50
 ```
 
 ### Run the Subscriber
@@ -50,14 +113,22 @@ cargo run --release -- publisher --bind tcp://*:5556 --interval 50
 In another terminal, start the subscriber:
 
 ```bash
-cargo run --release -- subscriber
+# Using justfile (recommended)
+just run-robot-subscriber
+
+# Or with cargo directly (requires LD_LIBRARY_PATH for subscriber)
+MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" \
+LD_LIBRARY_PATH="$(realpath mujoco_libs/mujoco-3.3.7/lib):$LD_LIBRARY_PATH" \
+cargo run --bin subscriber
 ```
 
 Or with custom options:
 
 ```bash
 # Custom connect address and topic
-cargo run --release -- subscriber --connect tcp://localhost:5556 --topic robot_joints
+MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" \
+LD_LIBRARY_PATH="$(realpath mujoco_libs/mujoco-3.3.7/lib):$LD_LIBRARY_PATH" \
+cargo run --bin subscriber -- --connect tcp://localhost:5556 --topic robot_joints
 ```
 
 ## Example Output
@@ -114,4 +185,23 @@ cargo run --release -- subscriber --connect tcp://localhost:5556 --topic robot_j
 - `serde` / `serde_json`: JSON serialization
 - `clap`: Command-line argument parsing
 - `anyhow`: Error handling
+- `mujoco-rs`: MuJoCo physics simulation library (with auto-download feature)
+- `zlib-rs`: Compression library (required by mujoco-rs)
+
+## Credits
+
+This project uses **[mujoco-rs](https://github.com/davidhozic/mujoco-rs)** - an open-source Rust wrapper for the MuJoCo physics engine.
+
+- **Repository**: [davidhozic/mujoco-rs](https://github.com/davidhozic/mujoco-rs)
+- **Documentation**: [mujoco-rs.readthedocs.io](https://mujoco-rs.readthedocs.io/)
+- **MuJoCo Version**: 3.3.7
+
+MuJoCo-rs provides safe Rust bindings and high-level wrappers around MuJoCo's C API, including features like:
+- Safe wrappers with automatic allocation and cleanup
+- Lifetime guarantees
+- Rust-native viewer
+- Offscreen rendering capabilities
+- Automatic MuJoCo library download (via `auto-download-mujoco` feature)
+
+We thank the mujoco-rs maintainers and contributors for their excellent work!
 

@@ -37,3 +37,6 @@ package-lock.json
 
 # Environment variables
 .env
+
+# MuJoCo libraries (auto-downloaded, too large for git)
+**/mujoco_libs/

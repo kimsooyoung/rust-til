@@ -2,6 +2,15 @@
 default:
     @just --list
 
+# Dispatch into `project_robot_joint_pubsub/justfile`.
+# Usage:
+#   just project_robot_joint_pubsub <recipe>
+# Examples:
+#   just project_robot_joint_pubsub mujoco-build
+#   just project_robot_joint_pubsub run-robot-subscriber
+project_robot_joint_pubsub +args:
+    @just -f "{{justfile_directory()}}/project_robot_joint_pubsub/justfile" {{args}}
+
 # Run a specific project with cargo-watch (runs and checks with clippy)
 # Usage: just watch <project_name>
 # Example: just watch types
@@ -107,3 +116,21 @@ watch-project-manufacturers manufacturer:
 # Note: Use quotes if the note title contains spaces
 watch-project-notes note_title:
     @cd project_notes && cargo-watch -qc -x 'run -- {{note_title}}' -i "{{note_title}}" -i "notes.txt" -x clippy
+
+# Run project_robot_joint_pubsub publisher with MUJOCO_DOWNLOAD_DIR set
+run-robot-publisher:
+    @cd project_robot_joint_pubsub && MUJOCO_DOWNLOAD_DIR="$(realpath mujoco_libs)" cargo run --bin publisher
+
+# Run project_robot_joint_pubsub subscriber with MUJOCO_STATIC_LINK_DIR set (for C++ viewer)
+# Note: MUJOCO_STATIC_LINK_DIR must be set to the mujoco build directory
+# Run ./build_mujoco_cpp.sh first to build the modified MuJoCo library
+run-robot-subscriber:
+    @cd project_robot_joint_pubsub && if [ -z "${MUJOCO_STATIC_LINK_DIR:-}" ]; then echo "❌ Error: MUJOCO_STATIC_LINK_DIR not set. Run ./build_mujoco_cpp.sh first."; echo "   Then set: export MUJOCO_STATIC_LINK_DIR=\"/path/to/mujoco-rs/mujoco/build\""; exit 1; fi; env MUJOCO_STATIC_LINK_DIR="${MUJOCO_STATIC_LINK_DIR:-}" cargo run --bin subscriber
+
+# Watch project_robot_joint_pubsub publisher (no MuJoCo dependency)
+watch-robot-publisher:
+    @cd project_robot_joint_pubsub && cargo-watch -qc -x "run --bin publisher" -x clippy
+
+# Watch project_robot_joint_pubsub subscriber with MUJOCO_STATIC_LINK_DIR set (for C++ viewer)
+watch-robot-subscriber:
+    @cd project_robot_joint_pubsub && if [ -z "${MUJOCO_STATIC_LINK_DIR:-}" ]; then echo "❌ Error: MUJOCO_STATIC_LINK_DIR not set. Run ./build_mujoco_cpp.sh first."; echo "   Then set: export MUJOCO_STATIC_LINK_DIR=\"/path/to/mujoco-rs/mujoco/build\""; exit 1; fi; env MUJOCO_STATIC_LINK_DIR="${MUJOCO_STATIC_LINK_DIR:-}" cargo-watch -qc -x "run --bin subscriber" -x clippy
