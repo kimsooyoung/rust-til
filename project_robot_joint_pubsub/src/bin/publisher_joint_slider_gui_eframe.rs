@@ -88,8 +88,9 @@ impl GuiPublisherApp {
                 cli.model.display()
             )
         })?;
-        let model = MjModel::from_xml(&model_path)
-            .map_err(|e| anyhow::anyhow!("Failed to load MJCF '{}': {:?}", model_path.display(), e))?;
+        let model = MjModel::from_xml(&model_path).map_err(|e| {
+            anyhow::anyhow!("Failed to load MJCF '{}': {:?}", model_path.display(), e)
+        })?;
 
         let publish_hz = cli.publish_hz.max(1);
         let publish_interval = Duration::from_secs_f64(1.0 / publish_hz as f64);
@@ -173,15 +174,15 @@ impl eframe::App for GuiPublisherApp {
 
             ui.separator();
 
-            egui::ScrollArea::vertical().auto_shrink([false; 2]).show(ui, |ui| {
-                for j in &mut self.joints {
-                    // Avoid borrowing `j` immutably while also borrowing `j.value_rad` mutably.
-                    let range = j.min_rad..=j.max_rad;
-                    ui.add(
-                        egui::Slider::new(&mut j.value_rad, range).text(&j.name),
-                    );
-                }
-            });
+            egui::ScrollArea::vertical()
+                .auto_shrink([false; 2])
+                .show(ui, |ui| {
+                    for j in &mut self.joints {
+                        // Avoid borrowing `j` immutably while also borrowing `j.value_rad` mutably.
+                        let range = j.min_rad..=j.max_rad;
+                        ui.add(egui::Slider::new(&mut j.value_rad, range).text(&j.name));
+                    }
+                });
 
             ui.separator();
             ui.horizontal(|ui| {
@@ -220,21 +221,32 @@ fn enumerate_joint_controls(model: &MjModel, filter_prefix: &[String]) -> Vec<Jo
         }
 
         if !filter_prefix.is_empty()
-            && !filter_prefix.iter().any(|p| !p.is_empty() && name.starts_with(p))
+            && !filter_prefix
+                .iter()
+                .any(|p| !p.is_empty() && name.starts_with(p))
         {
             continue;
         }
 
         let (min_rad, max_rad) = if limited.get(id).copied().unwrap_or(false) {
-            let r = range.get(id).copied().unwrap_or([*DEFAULT_UNLIMITED_RANGE_RAD.start(), *DEFAULT_UNLIMITED_RANGE_RAD.end()]);
+            let r = range.get(id).copied().unwrap_or([
+                *DEFAULT_UNLIMITED_RANGE_RAD.start(),
+                *DEFAULT_UNLIMITED_RANGE_RAD.end(),
+            ]);
             let (a, b) = (r[0] as f64, r[1] as f64);
             if a.is_finite() && b.is_finite() && a < b {
                 (a, b)
             } else {
-                (*DEFAULT_UNLIMITED_RANGE_RAD.start(), *DEFAULT_UNLIMITED_RANGE_RAD.end())
+                (
+                    *DEFAULT_UNLIMITED_RANGE_RAD.start(),
+                    *DEFAULT_UNLIMITED_RANGE_RAD.end(),
+                )
             }
         } else {
-            (*DEFAULT_UNLIMITED_RANGE_RAD.start(), *DEFAULT_UNLIMITED_RANGE_RAD.end())
+            (
+                *DEFAULT_UNLIMITED_RANGE_RAD.start(),
+                *DEFAULT_UNLIMITED_RANGE_RAD.end(),
+            )
         };
 
         out.push(JointControl {
@@ -266,4 +278,3 @@ fn main() -> Result<()> {
 
     Ok(())
 }
-

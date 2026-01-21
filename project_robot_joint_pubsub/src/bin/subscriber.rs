@@ -4,11 +4,12 @@
 //! - Loads an MJCF model from disk (supports `<include .../>`).
 //! - Starts MuJoCo's C++ viewer (via `mujoco-rs` `cpp-viewer` feature).
 //! - Receives `RobotState` messages and applies joint positions/velocities into `MjData`.
-//! - Each loop: sync viewer state → render UI → step simulation.
+//! - Each loop: sync viewer state → render UI → run `mj_forward` (no time integration).
 
 use anyhow::Result;
 use clap::Parser;
 use project_robot_joint_pubsub::RobotState;
+use std::collections::HashMap;
 use std::path::PathBuf;
 use std::time::Duration;
 use zmq::Context;
@@ -53,6 +54,22 @@ fn main() -> Result<()> {
         .map_err(|e| anyhow::anyhow!("Failed to load MJCF '{}': {:?}", model_path.display(), e))?;
     let mut data = MjData::new(&model);
 
+    // Cache joint handles once (avoids repeated `mj_name2id` calls on every message).
+    // This is important for hand models with many joints at higher publish rates.
+    let mut joint_cache: HashMap<String, MjJointDataInfo> = HashMap::new();
+    let njnt = model.ffi().njnt.max(0) as usize;
+    for id in 0..njnt {
+        let Some(name) = model.id_to_name(MjtObj::mjOBJ_JOINT, id as i32) else {
+            continue;
+        };
+        if name.is_empty() {
+            continue;
+        }
+        if let Some(info) = data.joint(name) {
+            joint_cache.insert(name.to_string(), info);
+        }
+    }
+
     // Launch MuJoCo C++ viewer
     println!("🎬 Launching MuJoCo C++ viewer...");
     let mut viewer = MjViewerCpp::launch_passive(&model, &data, 100);
@@ -94,9 +111,10 @@ fn main() -> Result<()> {
                                     // - Many hand joints are hinge joints (1 DoF): `qpos[0]` is the angle, `qvel[0]` is angular velocity.
                                     // - For more complex joints (e.g., `free` or `ball`), this simplistic mapping won't be sufficient.
                                     //   We intentionally "best-effort" update only the first DoF if present.
-                                    let mut updated = 0usize;
+                                    let mut _updated = 0usize;
                                     for joint in &robot_state.joints {
-                                        let Some(joint_info) = data.joint(&joint.joint_name) else {
+                                        let Some(joint_info) = joint_cache.get(&joint.joint_name)
+                                        else {
                                             continue;
                                         };
 
@@ -107,15 +125,12 @@ fn main() -> Result<()> {
                                         if let Some(qvel0) = view.qvel.get_mut(0) {
                                             *qvel0 = joint.velocity;
                                         }
-                                        updated += 1;
+                                        _updated += 1;
                                     }
 
-                                    if updated > 0 {
-                                        println!(
-                                            "📥 [{}] Updated {} joints",
-                                            robot_state.timestamp, updated
-                                        );
-                                    }
+                                    // Intentionally no per-message logging here:
+                                    // printing at high frequency significantly slows down the render loop,
+                                    // and this subscriber is intended for real-time visualization.
                                 }
                             }
                             Err(e) => {
@@ -137,12 +152,13 @@ fn main() -> Result<()> {
         }
 
         // Sync and render C++ viewer (sync doesn't take parameters, render needs explicit call)
-        // Order: sync -> render -> step -> sleep (as per mujoco-rs C++ viewer guidance)
+        // Order: sync -> render -> forward -> sleep
         viewer.sync();
         viewer.render(true); // render on screen and update the fps timer
 
-        // Step the simulation
-        data.step();
+        // For pose visualization driven by external joint angles, we do *not* integrate time.
+        // `forward()` updates all derived quantities (kinematics/dynamics) from the current state.
+        data.forward();
 
         // Sleep to match simulation timestep
         std::thread::sleep(Duration::from_secs_f64(timestep));
