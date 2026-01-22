@@ -1,3 +1,9 @@
+# shellcheck shell=bash
+
+# Explicit shell for recipes (helps editor tooling and linting).
+# Your environment is zsh, so we run commands through zsh.
+set shell := ['zsh', '-cu']
+
 # Default recipe: show available commands
 default:
     @just --list
@@ -35,19 +41,19 @@ run-inventory-system:
 # Usage: just clippy <project_name>
 # Example: just clippy types
 clippy project:
-    @cd {{project}} && cargo clippy
+    @cd {{ project }} && cargo clippy
 
 # Run a specific binary from lecture_4
 # Usage: just lecture4 <binary_name>
 # Example: just lecture4 lecture4_2
 lecture4 binary:
-    @cd lecture_4 && cargo run --bin {{binary}}
+    @cd lecture_4 && cargo run --bin "{{ binary }}"
 
 # Watch a specific binary from lecture_4
 # Usage: just watch-lecture4 <binary_name>
 # Example: just watch-lecture4 lecture4_2
 watch-lecture4 binary:
-    @cd lecture_4 && cargo-watch -qc -x "run --bin {{binary}}" -x clippy
+    @cd lecture_4 && cargo-watch -qc -x "run --bin {{ binary }}" -x clippy
 
 # Quick shortcuts for each project
 watch-borrowing-reference:

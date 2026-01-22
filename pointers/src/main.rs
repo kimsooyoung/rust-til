@@ -1,6 +1,6 @@
+use std::cell::Cell;
 use std::cell::RefCell;
 use std::ops::Deref;
-use std::cell::Cell;
 use std::rc::Rc;
 
 struct BoxedValue<T> {
@@ -39,16 +39,15 @@ impl Person {
 }
 
 fn main() {
-
     // Box is used to create a pointer to a value on the heap
-    // most values are usually stored on the stack, 
+    // most values are usually stored on the stack,
     // but some values are stored on the heap
     let age = Box::new(22);
     let twice = *age * 2;
     println!("twice: {}", twice);
 
     // Implementing Deref for a custom type
-    // 
+    //
     // Difference between deref and * operator
     // * Provides access to the value being pointed to by copying the value.
     // deref() Returns an immutable reference to the inner value.
@@ -65,13 +64,13 @@ fn main() {
     // RC Counter
     // Count the number of references to a value
     let arr = vec!["Hello".to_string(), "World".to_string(), "Rust".to_string()];
-    // Strong Count: When Rc::new(arr) is called, 
-    // the arr vector is moved onto the heap, and the strong reference count 
+    // Strong Count: When Rc::new(arr) is called,
+    // the arr vector is moved onto the heap, and the strong reference count
     // for this allocated memory is initialized to 1.
     let rc = Rc::new(arr);
-    // A Weak<T> pointer is a non-owning reference. 
-    // This is the critical distinction: 
-    // a Weak pointer does not contribute to the strong reference count, 
+    // A Weak<T> pointer is a non-owning reference.
+    // This is the critical distinction:
+    // a Weak pointer does not contribute to the strong reference count,
     // meaning it will not prevent the inner value (arr) from being dropped
     let _weak = Rc::downgrade(&rc);
     drop(rc);
@@ -99,7 +98,7 @@ fn main() {
 
     // RefCell is a mutable reference to a value on the heap
     let ref_cell = RefCell::new(vec![1, 2, 3]);
-    
+
     let mut mutable_ref = ref_cell.borrow_mut();
     mutable_ref.push(10);
     println!("mutable_ref: {:?}", mutable_ref);

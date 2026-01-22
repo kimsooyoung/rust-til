@@ -1,5 +1,5 @@
 use cursive::traits::{Nameable, Resizable};
-use cursive::views::{Dialog, EditView, ListView, SelectView};
+use cursive::views::{Dialog, EditView, ListView};
 use cursive::{Cursive, CursiveExt};
 
 use std::fs::{File, OpenOptions};
