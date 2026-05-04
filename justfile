@@ -8,6 +8,17 @@ set shell := ['zsh', '-cu']
 default:
     @just --list
 
+# Install CLI tools used by this repo's Justfiles (cargo-watch, just; rustup clippy; path checks).
+# Usage: just install-prerequisites
+install-prerequisites:
+    @bash "{{justfile_directory()}}/scripts/install-justfile-prerequisites.sh"
+
+# Run pre-commit on the whole repo (Rust fmt/clippy only for `1_variables`, `2_ownership`, `3_functions`).
+# Install once: `pip install pre-commit` && `pre-commit install`
+# Usage: just pre-commit
+pre-commit:
+    @pre-commit run --all-files
+
 # Dispatch into `project_robot_joint_pubsub/justfile`.
 # Usage:
 #   just project_robot_joint_pubsub <recipe>
@@ -76,6 +87,42 @@ watch-guessing-game:
 
 watch-hello-world:
     @just watch hello_world
+
+# Chapter 1 — variables tutorial (`1_variables/`)
+# Usage: `just run-chapter-1` | `just watch-chapter-1` | `just clippy-chapter-1`
+# From inside the crate: `cd 1_variables && just run`
+run-chapter-1:
+    @cd 1_variables && cargo run
+
+watch-chapter-1:
+    @just watch 1_variables
+
+clippy-chapter-1:
+    @cd 1_variables && cargo clippy
+
+# Chapter 2 — ownership tutorial (`2_ownership/`)
+# Usage: `just run-chapter-2` | `just watch-chapter-2` | `just clippy-chapter-2`
+# From inside the crate: `cd 2_ownership && just run`
+run-chapter-2:
+    @cd 2_ownership && cargo run
+
+watch-chapter-2:
+    @just watch 2_ownership
+
+clippy-chapter-2:
+    @cd 2_ownership && cargo clippy
+
+# Chapter 3 — functions tutorial (`3_functions/`)
+# Usage: `just run-chapter-3` | `just watch-chapter-3` | `just clippy-chapter-3`
+# From inside the crate: `cd 3_functions && just run`
+run-chapter-3:
+    @cd 3_functions && cargo run
+
+watch-chapter-3:
+    @just watch 3_functions
+
+clippy-chapter-3:
+    @cd 3_functions && cargo clippy
 
 watch-lecture-3:
     @just watch lecture_3

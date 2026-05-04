@@ -216,7 +216,7 @@ export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build"
 just run-robot-subscriber
 ```
 
-**Note:** 
+**Note:**
 - The C++ viewer requires static linking to a modified MuJoCo build
 - Building MuJoCo takes several minutes (one-time setup)
 - The mujoco-rs repository and build artifacts are excluded from git
