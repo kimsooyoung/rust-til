@@ -71,7 +71,7 @@ watch-borrowing-reference:
     @just watch borrowing_reference
 
 watch-enums:
-    @just watch enums
+    @just watch 5_enums
 
 watch-error-handling:
     @just watch error_handling
@@ -124,6 +124,30 @@ watch-chapter-3:
 clippy-chapter-3:
     @cd 3_functions && cargo clippy
 
+# Chapter 4 — structs tutorial (`4_structures/`)
+# Usage: `just run-chapter-4` | `just watch-chapter-4` | `just clippy-chapter-4`
+# From inside the crate: `cd 4_structures && just run`
+run-chapter-4:
+    @cd 4_structures && cargo run
+
+watch-chapter-4:
+    @just watch 4_structures
+
+clippy-chapter-4:
+    @cd 4_structures && cargo clippy
+
+# Chapter 5 — enums tutorial (`5_enums/`)
+# Usage: `just run-chapter-5` | `just watch-chapter-5` | `just clippy-chapter-5`
+# From inside the crate: `cd 5_enums && just run`
+run-chapter-5:
+    @cd 5_enums && cargo run
+
+watch-chapter-5:
+    @just watch 5_enums
+
+clippy-chapter-5:
+    @cd 5_enums && cargo clippy
+
 watch-lecture-3:
     @just watch lecture_3
 
@@ -131,7 +155,7 @@ watch-ownership:
     @just watch ownership
 
 watch-structs:
-    @just watch structs
+    @just watch 4_structures
 
 watch-types:
     @just watch types
