@@ -1,8 +1,8 @@
 // What are Structs?
 // - Structs are custom data types that group related data together
-// - They allow you to create your own types with named fields
+// - Regular structs use named fields; tuple structs use positional fields; unit structs have no fields
 // - Structs can have methods defined using impl blocks
-// - There are three types of structs: regular structs, tuple structs, and unit-like structs
+// - There are three kinds: regular structs, tuple structs, and unit-like structs
 
 // Regular Struct
 // - Has named fields
@@ -23,7 +23,7 @@ impl BankAccount {
         }
     }
 
-    // This should be mutable because we are modifying the balance
+    // &mut self: mutable borrow so we can change balance
     fn withdraw(&mut self, amount: f64) {
         self.balance -= amount;
         println!("Withdrew {} from {}", amount, self.owner);
@@ -44,7 +44,7 @@ impl BankAccount {
         println!("Deactivated account for {}", self.owner);
     }
 
-    // This should be immutable because we are only reading, not modifying
+    // &self: shared (immutable) borrow; we only read fields
     fn check_balance(&self) {
         println!(
             "Balance for {} is {}, is active: {}",
@@ -53,7 +53,8 @@ impl BankAccount {
     }
 }
 
-// Function that creates a new struct using struct update syntax
+// Struct update syntax: set some fields, copy the rest from `account` with `..account`
+// (this moves `account`; the caller no longer owns it afterward)
 fn build_fake_account(account: BankAccount) -> BankAccount {
     BankAccount {
         owner: "Fake Account".to_string(),
@@ -61,7 +62,8 @@ fn build_fake_account(account: BankAccount) -> BankAccount {
     }
 }
 
-// Tuple Struct
+// Tuple struct: a distinct type from (i32, i32, i32); fields are self.0, self.1, self.2
+#[derive(Debug)]
 struct Position(i32, i32, i32);
 
 impl Position {
@@ -89,7 +91,7 @@ fn main() {
     // Regular Struct
     // =========================================================================
 
-    // This should be mutable because we are calling methods that modify the struct
+    // `mut`: needed for field assignment, methods that take &mut self, and passing owned value to build_fake_account
     let mut my_account = BankAccount::new("Sooyoung Kim".to_string(), 1500.0);
     let mut mom_account = BankAccount {
         owner: "Mom".to_string(),
@@ -113,17 +115,17 @@ fn main() {
     my_account.deactivate();
     my_account.check_balance();
 
-    // make fake accounts using struct update syntax
+    // Fake account via struct update syntax (my_account is moved into the function)
     let fake_account = build_fake_account(my_account);
     fake_account.check_balance();
 
     // =========================================================================
     // Tuple Struct
     // =========================================================================
-    // - Similar to tuples but with a name
-    // - Useful when you want to give a tuple a name and make it a distinct type
-    // - This derives the Debug trait so that Position can be printed using {:?}
+    // - Similar to tuples but with a type name (not interchangeable with (i32, i32, i32))
+    // - `#[derive(Debug)]` on Position enables printing with {:?}
     let position = Position(10, 20, 30);
+    println!("position debug: {:?}", position);
     position.describe();
     let mut position_twice = position.twice();
     position_twice.describe();
@@ -139,7 +141,7 @@ fn main() {
     position4.describe();
 
     // =========================================================================
-    // Unit Like Struct
+    // Unit-like struct
     // =========================================================================
     // - Structs without any fields
     // - Useful for implementing traits on types that don't need to store data
