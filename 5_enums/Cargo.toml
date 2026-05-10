@@ -2,5 +2,9 @@
 name = "enums"
 version = "0.1.0"
 edition = "2024"
+default-run = "ex01_ip_struct"
+
+[lib]
+path = "src/lib.rs"
 
 [dependencies]

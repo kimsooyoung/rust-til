@@ -1,16 +1,23 @@
 # shellcheck shell=bash
-# Chapter 3 — functions. Run from this directory: `just run`
+# Chapter 3 — functions. Topics in `src/bin/`; shared code in `src/lib.rs`.
+# Run: `just run_ex01_tuple_block`, `just run_ex02_closures`
 
 set shell := ['zsh', '-cu']
 
 default:
     @just --list
 
-run:
-    @cargo run
+run_ex01_tuple_block:
+    @cargo run --bin ex01_tuple_block
+
+run_ex02_closures:
+    @cargo run --bin ex02_closures
+
+build-all:
+    @cargo build --bins
 
 watch:
-    @cargo-watch -qc -x run -x clippy
+    @cargo-watch -qc -x 'run --bin ex01_tuple_block' -x clippy
 
 clippy:
     @cargo clippy

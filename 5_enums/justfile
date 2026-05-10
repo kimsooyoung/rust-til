@@ -1,16 +1,29 @@
 # shellcheck shell=bash
-# Chapter 5 — enums. Run from this directory: `just run`
+# Chapter 5 — enums. Topics in `src/bin/`; types + demos in `src/lib.rs`.
+# Run: `just run_ex01_ip_struct`, … `just run_ex04_pet`
 
 set shell := ['zsh', '-cu']
 
 default:
     @just --list
 
-run:
-    @cargo run
+run_ex01_ip_struct:
+    @cargo run --bin ex01_ip_struct
+
+run_ex02_simple_ip:
+    @cargo run --bin ex02_simple_ip
+
+run_ex03_shapes:
+    @cargo run --bin ex03_shapes
+
+run_ex04_pet:
+    @cargo run --bin ex04_pet
+
+build-all:
+    @cargo build --bins
 
 watch:
-    @cargo-watch -qc -x run -x clippy
+    @cargo-watch -qc -x 'run --bin ex01_ip_struct' -x clippy
 
 clippy:
     @cargo clippy

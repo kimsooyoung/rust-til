@@ -1,16 +1,26 @@
 # shellcheck shell=bash
-# Chapter 2 — ownership. Run from this directory: `just run`
+# Chapter 2 — ownership. Topics in `src/bin/`; shared `fns` + demos in `src/lib.rs`.
+# Run: `just run_ex01_strings`, `just run_ex02_mut_clear`, `just run_ex03_borrow_shadow`
 
 set shell := ['zsh', '-cu']
 
 default:
     @just --list
 
-run:
-    @cargo run
+run_ex01_strings:
+    @cargo run --bin ex01_strings
+
+run_ex02_mut_clear:
+    @cargo run --bin ex02_mut_clear
+
+run_ex03_borrow_shadow:
+    @cargo run --bin ex03_borrow_shadow
+
+build-all:
+    @cargo build --bins
 
 watch:
-    @cargo-watch -qc -x run -x clippy
+    @cargo-watch -qc -x 'run --bin ex01_strings' -x clippy
 
 clippy:
     @cargo clippy

@@ -2,5 +2,9 @@
 name = "functions"
 version = "0.1.0"
 edition = "2024"
+default-run = "ex01_tuple_block"
+
+[lib]
+path = "src/lib.rs"
 
 [dependencies]
