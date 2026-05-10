@@ -1,0 +1,34 @@
+# shellcheck shell=bash
+# Chapter 11 — pointers. Examples live in `src/bin/*.rs` (no root `main.rs`).
+# Run from this directory: `just run_1_box`, `just run_2_deref`, … (or `cargo run --bin …`).
+# `cargo run` alone still respects `default-run` in Cargo.toml if you prefer the shell.
+
+set shell := ['zsh', '-cu']
+
+default:
+    @just --list
+
+run_1_box:
+    @cargo run --bin 1_box
+
+run_2_deref:
+    @cargo run --bin 2_deref
+
+run_3_rc_weak:
+    @cargo run --bin 3_rc_weak
+
+run_4_cell:
+    @cargo run --bin 4_cell
+
+run_5_refcell:
+    @cargo run --bin 5_refcell
+
+# Build every example binary.
+build-all:
+    @cargo build --bins
+
+watch:
+    @cargo-watch -qc -x run -x clippy
+
+clippy:
+    @cargo clippy

@@ -1,0 +1,8 @@
+[package]
+name = "pointers"
+version = "0.1.0"
+edition = "2024"
+# No `src/main.rs`: each example is its own binary under `src/bin/`.
+default-run = "1_box"
+
+[dependencies]
