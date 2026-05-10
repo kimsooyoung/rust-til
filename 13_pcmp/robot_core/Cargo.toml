@@ -1,0 +1,8 @@
+# Library crate `robot_core`: reusable robot building blocks.
+# Declared as a path dependency from the parent `pcmp/Cargo.toml`.
+[package]
+name = "robot_core"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

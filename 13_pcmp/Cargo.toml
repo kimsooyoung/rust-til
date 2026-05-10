@@ -1,0 +1,12 @@
+# Binary crate `pcmp`: runnable program in `src/main.rs`.
+#
+# The line below is the **dependency wiring**: Cargo compiles the sibling folder
+# `./robot_core/` as a library and exposes it under the Rust name `robot_core`
+# (that name comes from `robot_core/Cargo.toml` → `[package] name = "robot_core"`).
+[package]
+name = "pcmp"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+robot_core = { path = "robot_core" }
