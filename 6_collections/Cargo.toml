@@ -2,5 +2,9 @@
 name = "collections"
 version = "0.1.0"
 edition = "2024"
+default-run = "ex01_tuple_array"
+
+[lib]
+path = "src/lib.rs"
 
 [dependencies]

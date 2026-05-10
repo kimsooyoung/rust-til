@@ -90,7 +90,7 @@ watch-hello-world:
 
 # Chapter 1 — variables tutorial (`1_variables/`)
 # Usage: `just run-chapter-1` | `just watch-chapter-1` | `just clippy-chapter-1`
-# From inside the crate: `cd 1_variables && just run`
+# From inside the crate: `cd 1_variables && just run_ex01_bindings` (or `cargo run`)
 run-chapter-1:
     @cd 1_variables && cargo run
 
@@ -102,7 +102,7 @@ clippy-chapter-1:
 
 # Chapter 2 — ownership tutorial (`2_ownership/`)
 # Usage: `just run-chapter-2` | `just watch-chapter-2` | `just clippy-chapter-2`
-# From inside the crate: `cd 2_ownership && just run`
+# From inside the crate: `cd 2_ownership && just run_ex01_strings` (or `cargo run`)
 run-chapter-2:
     @cd 2_ownership && cargo run
 
@@ -114,7 +114,7 @@ clippy-chapter-2:
 
 # Chapter 3 — functions tutorial (`3_functions/`)
 # Usage: `just run-chapter-3` | `just watch-chapter-3` | `just clippy-chapter-3`
-# From inside the crate: `cd 3_functions && just run`
+# From inside the crate: `cd 3_functions && just run_ex01_tuple_block` (or `cargo run`)
 run-chapter-3:
     @cd 3_functions && cargo run
 
@@ -126,7 +126,7 @@ clippy-chapter-3:
 
 # Chapter 4 — structs tutorial (`4_structures/`)
 # Usage: `just run-chapter-4` | `just watch-chapter-4` | `just clippy-chapter-4`
-# From inside the crate: `cd 4_structures && just run`
+# From inside the crate: `cd 4_structures && just run_ex01_bank_account` (or `cargo run`)
 run-chapter-4:
     @cd 4_structures && cargo run
 
@@ -138,7 +138,7 @@ clippy-chapter-4:
 
 # Chapter 5 — enums tutorial (`5_enums/`)
 # Usage: `just run-chapter-5` | `just watch-chapter-5` | `just clippy-chapter-5`
-# From inside the crate: `cd 5_enums && just run`
+# From inside the crate: `cd 5_enums && just run_ex01_ip_struct` (or `cargo run`)
 run-chapter-5:
     @cd 5_enums && cargo run
 

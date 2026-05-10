@@ -1,16 +1,23 @@
 # shellcheck shell=bash
-# Chapter 7 — optionals. Run from this directory: `just run`
+# Chapter 7 — optionals. Topics in `src/bin/`; shared types in `src/lib.rs`.
+# Run: `just run_ex01_option_ops`, `just run_ex02_guest_composition`
 
 set shell := ['zsh', '-cu']
 
 default:
     @just --list
 
-run:
-    @cargo run
+run_ex01_option_ops:
+    @cargo run --bin ex01_option_ops
+
+run_ex02_guest_composition:
+    @cargo run --bin ex02_guest_composition
+
+build-all:
+    @cargo build --bins
 
 watch:
-    @cargo-watch -qc -x run -x clippy
+    @cargo-watch -qc -x 'run --bin ex01_option_ops' -x clippy
 
 clippy:
     @cargo clippy

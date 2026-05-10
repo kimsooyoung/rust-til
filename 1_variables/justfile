@@ -1,16 +1,29 @@
 # shellcheck shell=bash
-# Chapter 1 — variables. Run from this directory: `just run`
+# Chapter 1 — variables. Topics in `src/bin/`; shared code in `src/lib.rs` + modules.
+# Run: `just run_ex01_bindings`, `just run_ex02_numeric`, … or `cargo run --bin ex01_bindings`
 
 set shell := ['zsh', '-cu']
 
 default:
     @just --list
 
-run:
-    @cargo run
+run_ex01_bindings:
+    @cargo run --bin ex01_bindings
+
+run_ex02_numeric:
+    @cargo run --bin ex02_numeric
+
+run_ex03_shadow_const:
+    @cargo run --bin ex03_shadow_const
+
+run_ex04_tuples:
+    @cargo run --bin ex04_tuples
+
+build-all:
+    @cargo build --bins
 
 watch:
-    @cargo-watch -qc -x run -x clippy
+    @cargo-watch -qc -x 'run --bin ex01_bindings' -x clippy
 
 clippy:
     @cargo clippy

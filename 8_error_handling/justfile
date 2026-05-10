@@ -1,16 +1,26 @@
 # shellcheck shell=bash
-# Chapter 8 — error handling. Run from this directory: `just run`
+# Chapter 8 — error handling. Topics in `src/bin/`; `fns` + demos in `src/lib.rs`.
+# Run: `just run_ex01_divide`, `just run_ex02_result_helpers`, `just run_ex03_full_name`
 
 set shell := ['zsh', '-cu']
 
 default:
     @just --list
 
-run:
-    @cargo run
+run_ex01_divide:
+    @cargo run --bin ex01_divide
+
+run_ex02_result_helpers:
+    @cargo run --bin ex02_result_helpers
+
+run_ex03_full_name:
+    @cargo run --bin ex03_full_name
+
+build-all:
+    @cargo build --bins
 
 watch:
-    @cargo-watch -qc -x run -x clippy
+    @cargo-watch -qc -x 'run --bin ex01_divide' -x clippy
 
 clippy:
     @cargo clippy

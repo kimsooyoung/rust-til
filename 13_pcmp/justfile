@@ -1,0 +1,16 @@
+# shellcheck shell=bash
+# Chapter 13 — pcmp + local `robot_core` library. Run from this directory: `just run`
+
+set shell := ['zsh', '-cu']
+
+default:
+    @just --list
+
+run:
+    @cargo run
+
+watch:
+    @cargo-watch -qc -x run -x clippy
+
+clippy:
+    @cargo clippy

@@ -1,16 +1,26 @@
 # shellcheck shell=bash
-# Chapter 4 — structs. Run from this directory: `just run`
+# Chapter 4 — structs. Topics in `src/bin/`; types + demos in `src/lib.rs`.
+# Run: `just run_ex01_bank_account`, `just run_ex02_tuple_struct`, `just run_ex03_unit_struct`
 
 set shell := ['zsh', '-cu']
 
 default:
     @just --list
 
-run:
-    @cargo run
+run_ex01_bank_account:
+    @cargo run --bin ex01_bank_account
+
+run_ex02_tuple_struct:
+    @cargo run --bin ex02_tuple_struct
+
+run_ex03_unit_struct:
+    @cargo run --bin ex03_unit_struct
+
+build-all:
+    @cargo build --bins
 
 watch:
-    @cargo-watch -qc -x run -x clippy
+    @cargo-watch -qc -x 'run --bin ex01_bank_account' -x clippy
 
 clippy:
     @cargo clippy
