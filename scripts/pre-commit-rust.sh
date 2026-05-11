@@ -20,6 +20,7 @@ CHAPTERS=(
   11_pointers
   12_generics
   13_pcmp
+  14_asynchronous
 )
 
 fail=0

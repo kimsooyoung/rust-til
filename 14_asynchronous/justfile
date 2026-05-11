@@ -1,0 +1,29 @@
+# shellcheck shell=bash
+# Chapter 14 — asynchronous. Library `src/lib.rs`; demos in `src/bin/`.
+# Run: `just run_ex01_block_on`, `just run_ex02_sequential_await`, …
+
+set shell := ['zsh', '-cu']
+
+default:
+    @just --list
+
+run_ex01_block_on:
+    @cargo run --bin ex01_block_on
+
+run_ex02_sequential_await:
+    @cargo run --bin ex02_sequential_await
+
+run_ex03_return_future:
+    @cargo run --bin ex03_return_future
+
+run_ex04_async_move:
+    @cargo run --bin ex04_async_move
+
+build-all:
+    @cargo build --bins
+
+watch:
+    @cargo-watch -qc -x 'run --bin ex01_block_on' -x clippy
+
+clippy:
+    @cargo clippy
