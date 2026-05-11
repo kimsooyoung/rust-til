@@ -13,10 +13,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         eprintln!("Usage: cargo run -- <filename>");
         std::process::exit(1);
     }
-    
+
     // get current time information from chrono
     let now_string = Local::now().format("%Y-%m-%d %H:%M:%S").to_string();
-    
+
     // get filename from command line arguments
     let filename = &args[1];
     println!("filename: {}", filename);
@@ -26,7 +26,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         .open(filename)
         .unwrap();
 
-    // ? is for error handling, 
+    // ? is for error handling,
     // it propagates the error up to the main function
     file.write_all(b"<--")?;
     file.write_all(now_string.as_bytes())?;

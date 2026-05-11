@@ -1,4 +1,4 @@
-use crate::lifetime_fns::{get_name_ref, Person};
+use crate::lifetime_fns::{Person, get_name_ref};
 
 pub fn run() {
     let person = Person {

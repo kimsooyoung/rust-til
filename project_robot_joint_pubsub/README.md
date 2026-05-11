@@ -54,7 +54,7 @@ This project uses MuJoCo physics simulation library with **C++ viewer support**.
    ```bash
    # The script will output the library directory, set it like this:
    export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build/lib"
-   
+
    # Or add it to your shell profile (~/.bashrc, ~/.zshrc, etc.) for persistence:
    echo 'export MUJOCO_STATIC_LINK_DIR="/path/to/mujoco-rs/mujoco/build/lib"' >> ~/.bashrc
    source ~/.bashrc
@@ -64,13 +64,13 @@ This project uses MuJoCo physics simulation library with **C++ viewer support**.
    ```bash
    # Using justfile (checks for MUJOCO_STATIC_LINK_DIR)
    just run-robot-subscriber
-   
+
    # Or manually:
    cargo build --bin subscriber
    cargo run --bin subscriber
    ```
 
-**Note:** 
+**Note:**
 - The C++ viewer requires static linking, so `auto-download-mujoco` feature is not used
 - The build script clones mujoco-rs to `../mujoco-rs` by default (can be changed via `MUJOCO_RS_REPO_DIR` env var)
 - Building MuJoCo can take several minutes depending on your system
@@ -204,4 +204,3 @@ MuJoCo-rs provides safe Rust bindings and high-level wrappers around MuJoCo's C 
 - Automatic MuJoCo library download (via `auto-download-mujoco` feature)
 
 We thank the mujoco-rs maintainers and contributors for their excellent work!
-

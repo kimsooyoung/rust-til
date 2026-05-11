@@ -1,3 +1,5 @@
+#![allow(clippy::unnecessary_unwrap)]
+
 use crate::fns::{get_user_name, get_user_name_err};
 
 pub fn run() {

@@ -2,9 +2,7 @@
 
 use std::fmt;
 
-use crate::naming::{
-    CanDrive, HasFullName, HasName, InitializeWithFullname,
-};
+use crate::naming::{CanDrive, HasFullName, HasName, InitializeWithFullname};
 
 #[derive(Debug)]
 pub struct Person {

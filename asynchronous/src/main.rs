@@ -26,10 +26,10 @@ fn return_future() -> impl Future<Output = String> {
 
 fn get_async_name() -> impl Future<Output = String> {
     let name = "Sooyoung Kim".to_string();
-    async move { 
+    async move {
         sleep(Duration::from_secs(1)).await;
-        format!("Async Name: {}", name) 
-    }   
+        format!("Async Name: {}", name)
+    }
 }
 
 #[tokio::main]

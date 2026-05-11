@@ -1,6 +1,6 @@
 use crate::naming::{
-    print_details, print_details_with_multiple_traits, print_full_name, same_two,
-    HasFullNameWithName, InitializeWithFullname,
+    HasFullNameWithName, InitializeWithFullname, print_details, print_details_with_multiple_traits,
+    print_full_name, same_two,
 };
 use crate::person::Person;
 

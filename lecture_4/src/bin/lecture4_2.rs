@@ -16,11 +16,11 @@ fn dangle() -> String {
 fn main(){
     let _my_str = String::from("my string!");
     let mut _my_str_mut = String::from("my mutable string!");
-    
+
     let _str_len = str_len(&_my_str);
     str_len_mut(&mut _my_str_mut);
     str_len_mut(&mut _my_str_mut);
-    
+
     println!("_str_len: {}", _str_len);
     println!("_my_str_mut: {}", _my_str_mut);
 
