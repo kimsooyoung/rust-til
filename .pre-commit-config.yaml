@@ -1,5 +1,5 @@
 # Pre-commit hooks for this repo.
-# Chapters 1–3 only: other crates are intentionally tutorial-style and are not lint-gated here.
+# Covers all chapter crates with Cargo.toml (1_variables … 13_pcmp).
 # Install: `pip install pre-commit` then `pre-commit install`
 # Run manually: `pre-commit run --all-files`
 
@@ -10,13 +10,16 @@ repos:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: check-yaml
+      - id: check-toml
       - id: check-merge-conflict
+      - id: mixed-line-ending
+        args: [--fix=lf]
 
   - repo: local
     hooks:
-      # Only these three crates are checked; other packages are left as-is for learning demos.
-      - id: rust-fmt-clippy-chapters-123
-        name: cargo fmt + clippy (1_variables, 2_ownership, 3_functions only)
-        entry: bash scripts/pre-commit-chapters-123.sh
+      - id: rust-fmt-clippy-check
+        name: cargo fmt + clippy + check (all chapter crates)
+        entry: bash scripts/pre-commit-rust.sh
         language: system
         pass_filenames: false
+        files: '\.(rs|toml)$'

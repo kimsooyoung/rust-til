@@ -2,7 +2,7 @@
 //!
 //! Run via: `cargo run --bin ex01_bank_account`
 
-use crate::bank_account::{build_fake_account, BankAccount};
+use crate::bank_account::{BankAccount, build_fake_account};
 
 pub fn run() {
     let mut my_account = BankAccount::new("Sooyoung Kim".to_string(), 1500.0);

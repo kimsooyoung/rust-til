@@ -1,3 +1,5 @@
+#![allow(clippy::unnecessary_literal_unwrap)]
+
 pub fn run() {
     let name: Option<&str> = Some("Option");
     match name {

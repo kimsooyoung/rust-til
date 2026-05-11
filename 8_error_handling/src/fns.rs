@@ -1,3 +1,5 @@
+#![allow(clippy::result_unit_err)]
+
 pub fn get_user_name() -> Result<&'static str, ()> {
     Ok("Sooyoung")
 }

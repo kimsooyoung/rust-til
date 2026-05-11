@@ -1,4 +1,4 @@
-use crate::guest::{boarding_summary, parse_positive_i32, Guest};
+use crate::guest::{Guest, boarding_summary, parse_positive_i32};
 
 pub fn run() {
     for s in ["42", "0", "not-a-number"] {
