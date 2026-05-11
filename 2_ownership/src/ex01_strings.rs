@@ -3,7 +3,7 @@
 //! Run via: `cargo run --bin ex01_strings`
 
 use crate::fns::{
-    get_name_owned, get_name_static, get_str_len_wo_ownership, get_str_len_with_ownership,
+    get_name_owned, get_name_static, get_str_len_with_ownership, get_str_len_wo_ownership,
     print_str_len,
 };
 
