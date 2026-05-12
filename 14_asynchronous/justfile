@@ -19,6 +19,42 @@ run_ex03_return_future:
 run_ex04_async_move:
     @cargo run --bin ex04_async_move
 
+run_ex05_spawn:
+    @cargo run --bin ex05_spawn
+
+run_ex06_select:
+    @cargo run --bin ex06_select
+
+run_ex07_interval:
+    @cargo run --bin ex07_interval
+
+run_ex08_timeout:
+    @cargo run --bin ex08_timeout
+
+run_ex09_mpsc:
+    @cargo run --bin ex09_mpsc
+
+run_ex10_watch:
+    @cargo run --bin ex10_watch
+
+run_ex11_mutex:
+    @cargo run --bin ex11_mutex
+
+run_ex12_notify:
+    @cargo run --bin ex12_notify
+
+run_ex13_spawn_blocking:
+    @cargo run --bin ex13_spawn_blocking
+
+run_ex14_runtime_builder:
+    @cargo run --bin ex14_runtime_builder
+
+run_ex15_cancellation:
+    @cargo run --bin ex15_cancellation
+
+run_ex16_joinset:
+    @cargo run --bin ex16_joinset
+
 build-all:
     @cargo build --bins
 
