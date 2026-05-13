@@ -10,7 +10,7 @@ use tokio::time::{Duration, sleep};
 enum State {
     Starting,
     Working(u32),
-    Done,
+    Done(u32),
 }
 
 impl State {
@@ -18,7 +18,7 @@ impl State {
         match self {
             State::Starting => "Starting".to_string(),
             State::Working(n) => format!("Working(step={n})"),
-            State::Done => "Done".to_string(),
+            State::Done(n) => format!("Done(step={n})"),
         }
     }
 }
@@ -49,23 +49,25 @@ async fn run_inner() {
     // Give subscribers a moment to park on their first `changed().await`.
     sleep(Duration::from_millis(20)).await;
 
-    // BURST #1: fire several updates back-to-back with NO `.await` between
-    // them. Because subscribers are sleeping ~80ms between iterations, they
-    // will not see every intermediate `Working(n)`; `watch` overwrites the
-    // slot and a slow subscriber observes only the most recent value when
-    // it eventually wakes.
+    // BURST #1: pause after each `send` so slow subscribers (~80ms work +
+    // sleep) can run `changed` → read → sleep between publishes. Each
+    // `Working(n)` stays observable instead of being overwritten in one tick.
+    const PAUSE_AFTER_SEND_MS: u64 = 100;
     for n in 1..=5 {
         tx.send(State::Working(n)).expect("subscribers gone");
+        sleep(Duration::from_millis(PAUSE_AFTER_SEND_MS)).await;
     }
 
-    // Let subscribers drain whatever the latest value happens to be.
+    // Let subscribers finish their last sleep before the rapid burst.
     sleep(Duration::from_millis(120)).await;
 
-    // BURST #2: another rapid burst, then immediately publish `Done`.
+    // BURST #2: no `.await` between sends — slot jumps 6→…→9→`Done(9)` while
+    // subscribers may still be in `sleep(80ms)`; they typically log once
+    // (latest only), not every intermediate step.
     for n in 6..=9 {
         tx.send(State::Working(n)).expect("subscribers gone");
     }
-    tx.send(State::Done).expect("subscribers gone");
+    tx.send(State::Done(9)).expect("subscribers gone");
 
     // Drop the sender to close the channel and unblock subscribers' exit.
     drop(tx);
