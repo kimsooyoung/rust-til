@@ -40,3 +40,6 @@ package-lock.json
 
 # MuJoCo libraries (auto-downloaded, too large for git)
 **/mujoco_libs/
+
+# Claude Code agent memory
+.claude/agent-memory/
