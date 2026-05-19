@@ -54,18 +54,6 @@ run-inventory-system:
 clippy project:
     @cd {{ project }} && cargo clippy
 
-# Run a specific binary from lecture_4
-# Usage: just lecture4 <binary_name>
-# Example: just lecture4 lecture4_2
-lecture4 binary:
-    @cd lecture_4 && cargo run --bin "{{ binary }}"
-
-# Watch a specific binary from lecture_4
-# Usage: just watch-lecture4 <binary_name>
-# Example: just watch-lecture4 lecture4_2
-watch-lecture4 binary:
-    @cd lecture_4 && cargo-watch -qc -x "run --bin {{ binary }}" -x clippy
-
 # Quick shortcuts for each project
 watch-borrowing-reference:
     @just watch borrowing_reference
@@ -147,9 +135,6 @@ watch-chapter-5:
 
 clippy-chapter-5:
     @cd 5_enums && cargo clippy
-
-watch-lecture-3:
-    @just watch lecture_3
 
 watch-ownership:
     @just watch ownership
