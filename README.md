@@ -116,7 +116,6 @@ just watch-enums
 just watch-error-handling
 just watch-guessing-game
 just watch-hello-world
-just watch-lecture-3
 just watch-structs
 just watch-collections
 just watch-optionals
@@ -152,19 +151,6 @@ just clippy <project_name>
 just
 # or
 just --list
-```
-
-#### Lecture 4 Binaries
-
-Lecture 4 has multiple binaries. Run them with:
-
-```bash
-# Run a specific binary
-just lecture4 lecture4_2
-just lecture4 lecture4_3
-
-# Watch a specific binary
-just watch-lecture4 lecture4_2
 ```
 
 #### Project with Arguments
