@@ -10,19 +10,36 @@
 #
 # Note: environment variables set in a `just` recipe cannot persist back to your shell.
 
-# Default recipe: show available commands in this file
+# shellcheck shell=bash
+set shell := ['zsh', '-cu']
+
+# Default recipe: list available commands
 default:
     @just --list
 
-# Compatibility wrapper:
-# If you're already in `project_robot_joint_pubsub/`, you can still run:
-#   just project_robot_joint_pubsub <recipe>
-# even though this directory has its own `justfile`.
-#
-# Important: this must NOT be the first recipe, otherwise `just` (with no args)
-# tries to treat it as the default and errors.
-project_robot_joint_pubsub +args:
-    @just -f "{{justfile_directory()}}/justfile" {{args}}
+# Build (dev profile)
+build:
+    @cd "{{justfile_directory()}}" && cargo build
+
+# Build (release profile)
+build-release:
+    @cd "{{justfile_directory()}}" && cargo build --release
+
+# Lint with clippy (deny warnings)
+clippy:
+    @cd "{{justfile_directory()}}" && cargo clippy --all-targets --all-features -- -D warnings
+
+# Format with rustfmt
+fmt:
+    @cd "{{justfile_directory()}}" && cargo fmt --all
+
+# Check formatting (CI-style)
+fmt-check:
+    @cd "{{justfile_directory()}}" && cargo fmt --all -- --check
+
+# Tests
+test:
+    @cd "{{justfile_directory()}}" && cargo test --all-features
 
 # Build MuJoCo (modified) with C++ viewer support.
 # This runs the repo-provided script and prints the resulting library directory.
@@ -35,16 +52,6 @@ mujoco-export-hint:
     @cd "{{justfile_directory()}}" && \
       echo "Run this in your shell (cannot be persisted by just):" && \
       echo "  export MUJOCO_STATIC_LINK_DIR=\"$(realpath ../mujoco-rs/mujoco/build/lib)\""
-
-# Build binaries (dev profile).
-# - `publisher` does not require a system MuJoCo install.
-# - `subscriber` requires MUJOCO_STATIC_LINK_DIR for the C++ viewer build.
-build:
-    @cd "{{justfile_directory()}}" && cargo build
-
-# Build binaries (release profile).
-build-release:
-    @cd "{{justfile_directory()}}" && cargo build --release
 
 # Run publisher with MUJOCO_DOWNLOAD_DIR set (used by mujoco-rs when auto-download is enabled).
 # This keeps downloaded artifacts inside `project_robot_joint_pubsub/mujoco_libs` in dev.

@@ -1,0 +1,6 @@
+# Sample-run artifacts from `cargo run -- <filename>`.
+# The CLI creates whatever filename you pass it; ignore the common ones
+# plus a couple of historical stragglers from prior runs.
+notes.txt
+My
+*.notes.txt

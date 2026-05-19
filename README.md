@@ -45,7 +45,7 @@ cargo install cargo-watch
 
 #### 3. Install just (Command Runner)
 
-`just` is a command runner (like `make`) that simplifies running common tasks. Instead of typing long commands like `cargo-watch -qc -x run -x clippy`, you can use simple commands like `just watch types`.
+`just` is a command runner (like `make`) that simplifies running common tasks. Instead of typing long commands like `cargo-watch -qc -x run -x clippy`, you can use simple commands like `just watch-chapter-1`.
 
 **Why use just?**
 - ✅ **Shorter commands** - Replace long cargo-watch commands with simple shortcuts
@@ -91,13 +91,13 @@ The easiest way to run projects is using the `just` commands. The `justfile` in 
 just watch <project_name>
 
 # Examples:
-just watch types
-just watch ownership
-just watch functions
+just watch-chapter-1
+just watch 2_ownership
+just watch 3_functions
 ```
 
-**What happens when you run `just watch types`?**
-- Changes directory to the `types` project
+**What happens when you run `just watch-chapter-1`?**
+- Changes directory to the `1_variables` chapter crate
 - Runs `cargo-watch -qc -x run -x clippy`
 - Automatically rebuilds and runs when files change
 - Checks code with clippy on each change
@@ -107,23 +107,18 @@ just watch functions
 You can use project-specific shortcuts for faster access (no need to type the project name):
 
 ```bash
-just watch-types
-just watch-ownership
-just watch-functions
-just watch-generics
-just watch-borrowing-reference
-just watch-enums
-just watch-error-handling
-just watch-guessing-game
-just watch-hello-world
-just watch-structs
-just watch-collections
-just watch-optionals
-just watch-asynchronous
-just watch-pcmp
-just watch-lifetimes
-just watch-traits
-just watch-pointers
+just watch-chapter-1
+just watch-chapter-2
+just watch-chapter-3
+# … through …
+just watch-chapter-14
+
+# Semantic aliases (same as watch-chapter-N for some chapters):
+just watch-enums          # 5_enums
+just watch-structs        # 4_structures
+just watch-collections    # 6_collections
+just watch-asynchronous   # 14_asynchronous
+
 just watch-project-manufacturers
 just watch-project-notes
 ```
@@ -216,14 +211,14 @@ just run-robot-subscriber
 If you prefer to run projects manually, navigate to any project directory and run:
 
 ```bash
-cd types
+cd 1_variables
 cargo run
 ```
 
 Or use cargo-watch directly:
 
 ```bash
-cd types
+cd 1_variables
 cargo-watch -qc -x run -x clippy
 ```
 

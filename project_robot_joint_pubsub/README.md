@@ -81,7 +81,14 @@ This project uses MuJoCo physics simulation library with **C++ viewer support**.
 ### Build the project
 
 ```bash
-# Using justfile (automatically handles MUJOCO_DOWNLOAD_DIR)
+# From inside `project_robot_joint_pubsub/`:
+just build          # cargo build (dev profile)
+just build-release  # cargo build --release
+just clippy         # cargo clippy --all-targets --all-features -- -D warnings
+just fmt-check      # cargo fmt --all -- --check
+just test           # cargo test --all-features
+
+# Or run the binaries directly (MuJoCo env handled by the recipe):
 just run-robot-publisher
 just run-robot-subscriber
 

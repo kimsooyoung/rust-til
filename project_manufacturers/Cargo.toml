@@ -2,9 +2,13 @@
 name = "project_manufacturers"
 version = "0.1.0"
 edition = "2024"
+description = "CLI that queries the NHTSA vehicles API and filters manufacturers by keyword."
+license = "MIT OR Apache-2.0"
+readme = "README.md"
 
 [dependencies]
 serde = "1.0.228"
 reqwest = { version = "0.12", features = ["json"] }
 tokio = { version = "1", features = ["full"] }
 serde_json = "1.0.149"
+anyhow = "1.0"

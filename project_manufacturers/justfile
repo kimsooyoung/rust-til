@@ -1,0 +1,40 @@
+# shellcheck shell=bash
+set shell := ['zsh', '-cu']
+
+# Default recipe: list available commands
+default:
+    @just --list
+
+# Build (dev profile)
+build:
+    @cd "{{justfile_directory()}}" && cargo build
+
+# Build (release profile)
+build-release:
+    @cd "{{justfile_directory()}}" && cargo build --release
+
+# Run the CLI with a keyword argument
+# Usage: just run BMW
+run keyword:
+    @cd "{{justfile_directory()}}" && cargo run -- {{keyword}}
+
+# Rebuild and re-run on every source change
+# Usage: just watch BMW
+watch keyword:
+    @cd "{{justfile_directory()}}" && cargo-watch -qc -s "cargo run -- {{keyword}}" -x clippy
+
+# Lint with clippy (deny warnings)
+clippy:
+    @cd "{{justfile_directory()}}" && cargo clippy --all-targets --all-features -- -D warnings
+
+# Format with rustfmt
+fmt:
+    @cd "{{justfile_directory()}}" && cargo fmt --all
+
+# Check formatting (CI-style)
+fmt-check:
+    @cd "{{justfile_directory()}}" && cargo fmt --all -- --check
+
+# Tests
+test:
+    @cd "{{justfile_directory()}}" && cargo test --all-features
