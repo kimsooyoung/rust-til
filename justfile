@@ -30,13 +30,13 @@ project_robot_joint_pubsub +args:
 
 # Run a specific project with cargo-watch (runs and checks with clippy)
 # Usage: just watch <project_name>
-# Example: just watch types
+# Example: just watch 1_variables
 watch project:
     @cd {{project}} && cargo-watch -qc -x run -x clippy
 
 # Run a specific project once (without watch mode)
 # Usage: just run <project_name>
-# Example: just run types
+# Example: just run 1_variables
 run project:
     @cd {{project}} && cargo run
 
@@ -50,31 +50,22 @@ run-inventory-system:
 
 # Run clippy on a specific project
 # Usage: just clippy <project_name>
-# Example: just clippy types
+# Example: just clippy 1_variables
 clippy project:
     @cd {{ project }} && cargo clippy
 
 # Quick shortcuts for each project
-watch-borrowing-reference:
-    @just watch borrowing_reference
-
 watch-enums:
     @just watch 5_enums
 
 watch-error-handling:
-    @just watch error_handling
+    @just watch 8_error_handling
 
 watch-functions:
-    @just watch functions
+    @just watch 3_functions
 
 watch-generics:
-    @just watch generics
-
-watch-guessing-game:
-    @just watch guessing_game
-
-watch-hello-world:
-    @just watch hello_world
+    @just watch 12_generics
 
 # Chapter 1 — variables tutorial (`1_variables/`)
 # Usage: `just run-chapter-1` | `just watch-chapter-1` | `just clippy-chapter-1`
@@ -136,35 +127,119 @@ watch-chapter-5:
 clippy-chapter-5:
     @cd 5_enums && cargo clippy
 
-watch-ownership:
-    @just watch ownership
+# Chapter 6 — collections tutorial (`6_collections/`)
+run-chapter-6:
+    @cd 6_collections && cargo run
+
+watch-chapter-6:
+    @just watch 6_collections
+
+clippy-chapter-6:
+    @cd 6_collections && cargo clippy
+
+# Chapter 7 — optionals tutorial (`7_optionals/`)
+run-chapter-7:
+    @cd 7_optionals && cargo run
+
+watch-chapter-7:
+    @just watch 7_optionals
+
+clippy-chapter-7:
+    @cd 7_optionals && cargo clippy
+
+# Chapter 8 — error handling tutorial (`8_error_handling/`)
+run-chapter-8:
+    @cd 8_error_handling && cargo run
+
+watch-chapter-8:
+    @just watch 8_error_handling
+
+clippy-chapter-8:
+    @cd 8_error_handling && cargo clippy
+
+# Chapter 9 — lifetimes tutorial (`9_lifetimes/`)
+run-chapter-9:
+    @cd 9_lifetimes && cargo run
+
+watch-chapter-9:
+    @just watch 9_lifetimes
+
+clippy-chapter-9:
+    @cd 9_lifetimes && cargo clippy
+
+# Chapter 10 — traits tutorial (`10_traits/`)
+run-chapter-10:
+    @cd 10_traits && cargo run
+
+watch-chapter-10:
+    @just watch 10_traits
+
+clippy-chapter-10:
+    @cd 10_traits && cargo clippy
+
+# Chapter 11 — pointers tutorial (`11_pointers/`)
+run-chapter-11:
+    @cd 11_pointers && cargo run
+
+watch-chapter-11:
+    @just watch 11_pointers
+
+clippy-chapter-11:
+    @cd 11_pointers && cargo clippy
+
+# Chapter 12 — generics tutorial (`12_generics/`)
+run-chapter-12:
+    @cd 12_generics && cargo run
+
+watch-chapter-12:
+    @just watch 12_generics
+
+clippy-chapter-12:
+    @cd 12_generics && cargo clippy
+
+# Chapter 13 — pcmp tutorial (`13_pcmp/`)
+run-chapter-13:
+    @cd 13_pcmp && cargo run
+
+watch-chapter-13:
+    @just watch 13_pcmp
+
+clippy-chapter-13:
+    @cd 13_pcmp && cargo clippy
+
+# Chapter 14 — asynchronous tutorial (`14_asynchronous/`)
+run-chapter-14:
+    @cd 14_asynchronous && cargo run
+
+watch-chapter-14:
+    @just watch 14_asynchronous
+
+clippy-chapter-14:
+    @cd 14_asynchronous && cargo clippy
 
 watch-structs:
     @just watch 4_structures
 
-watch-types:
-    @just watch types
-
 watch-collections:
-    @just watch collections
+    @just watch 6_collections
 
 watch-optionals:
-    @just watch optionals
+    @just watch 7_optionals
 
 watch-asynchronous:
-    @just watch asynchronous
+    @just watch 14_asynchronous
 
 watch-pcmp:
-    @just watch pcmp
+    @just watch 13_pcmp
 
 watch-lifetimes:
-    @just watch lifetimes
+    @just watch 9_lifetimes
 
 watch-traits:
-    @just watch traits
+    @just watch 10_traits
 
 watch-pointers:
-    @just watch pointers
+    @just watch 11_pointers
 
 # Watch project_manufacturers with an argument
 # Usage: just watch-project-manufacturers <manufacturer>
