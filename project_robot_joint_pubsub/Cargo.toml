@@ -2,6 +2,9 @@
 name = "project_robot_joint_pubsub"
 version = "0.1.0"
 edition = "2021"
+description = "Async ZMQ pub/sub for 6-DOF robot joint angles, with a MuJoCo C++ viewer subscriber."
+license = "MIT OR Apache-2.0"
+readme = "README.md"
 
 [[bin]]
 name = "publisher"

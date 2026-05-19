@@ -1,0 +1,38 @@
+# shellcheck shell=bash
+set shell := ['zsh', '-cu']
+
+# Default recipe: list available commands
+default:
+    @just --list
+
+# Build (dev profile)
+build:
+    @cd "{{justfile_directory()}}" && cargo build
+
+# Build (release profile)
+build-release:
+    @cd "{{justfile_directory()}}" && cargo build --release
+
+# Run the binary (cursive requires a real terminal; TERM is set for safety)
+run:
+    @cd "{{justfile_directory()}}" && TERM=xterm-256color cargo run
+
+# Rebuild and re-run on every source change
+watch:
+    @cd "{{justfile_directory()}}" && TERM=xterm-256color cargo-watch -qc -x run -x clippy
+
+# Lint with clippy (deny warnings)
+clippy:
+    @cd "{{justfile_directory()}}" && cargo clippy --all-targets --all-features -- -D warnings
+
+# Format with rustfmt
+fmt:
+    @cd "{{justfile_directory()}}" && cargo fmt --all
+
+# Check formatting (CI-style)
+fmt-check:
+    @cd "{{justfile_directory()}}" && cargo fmt --all -- --check
+
+# Tests
+test:
+    @cd "{{justfile_directory()}}" && cargo test --all-features
